@@ -1,6 +1,9 @@
 //import { useState } from "react";
 //import NewProject from "./NewProject.jsx";
-export default function SideBar({onSelect, projects}){
+export default function SideBar({onSelect, 
+  projects, 
+  onSelectProject,
+selectedProjectId}){
 
 
   return (
@@ -10,10 +13,20 @@ export default function SideBar({onSelect, projects}){
         <button className="px-4 py-2 text-xs md:text-base rounded-md bg-stone-700 text-stone-400 hover:bg-stone-600 hover:text-stone-100" onClick={onSelect}> + Add Project</button>
         </div>
         <ul className="mt-8">
-        {projects.map((project) => (
+        {projects.map((project) => {
+            let cssClasses = "w-full text-left px-2 py-1 rounded-sm my-1 text-stone-400 hover:text-stone-200 hover:bg-stone-800";
+            if (project.id === selectedProjectId) {
+              cssClasses += ' bg-stone-800 text-stone-200'
+            } else {
+              cssClasses +=' text-stone-400'
+            }
+          return (
           <li key={project.id}>
-            <button className="w-full text-left px-2 py-1 rounded-sm my-1 text-stone-400 hover:text-stone-200 hover:bg-stone-800">{project.title}</button>
-        </li>))}
+            <button className={cssClasses}
+            onClick={()=>onSelectProject(project.id)}>
+              {project.title}</button>
+        </li>);
+        })}
         </ul>
       </aside>
   );
